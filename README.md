@@ -19,3 +19,11 @@ npm run build
 ```
 npm run lint
 ```
+
+### Library build
+
+```
+npm run lib
+```
+
+
