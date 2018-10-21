@@ -18,6 +18,9 @@
     </form>
     <h3>Formdata</h3>
     <pre>{{ formData }}</pre>
+                <input type="hidden" name="REQUEST_TOKEN" :value="requestToken">
+                <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung">
+                <input type="hidden" name="id" :value="begegnungId">
     </div>
 </template>
 
@@ -44,6 +47,8 @@ export default {
             spielplan: [ ],
             numSlots: 0,
             formData: { test: 'initial' }
+            requestToken: '',
+            begegnungId: ''
         }
     },
     computed: {
