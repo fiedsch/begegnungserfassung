@@ -1,6 +1,6 @@
 <template>
     <input
-            class="form-control"
+            class="form-control spieler-score"
             :name="inputname" v-model.number="score"
             type="number"
             min="0" max="3"
@@ -66,4 +66,13 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+    input[type=number].spieler-score::-webkit-inner-spin-button,
+    input[type=number].spieler-score::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type=number] {
+        -moz-appearance:textfield;
+        width: 2em;
+    }
 </style>

@@ -1,8 +1,10 @@
 <template>
-    <table>
-        <TableHeader :home="home" :away="away"></TableHeader>
-        <TableBody :home="home" :away="away" :spielplan="spielplan"></TableBody>
-    </table>
+    <div class="results-table">
+        <table>
+            <TableHeader :home="home" :away="away"></TableHeader>
+            <TableBody :home="home" :away="away" :spielplan="spielplan"></TableBody>
+        </table>
+    </div>
 </template>
 
 <script>
@@ -37,4 +39,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.results-table {
+    margin-top: 2rem;
+}
 </style>

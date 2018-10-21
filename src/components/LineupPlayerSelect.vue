@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="linup-player">
         <span class="slot">{{ suffix }}{{ slotNumber }}</span>
-        <select v-model="selected" :name="selectname" title="foo">
+        <select v-model="selected" :name="selectname" class="tl_select unsetwidth">
             <option
                 v-for="a in available" :value="a.id"
                 :key="'player_'+a.id"
@@ -64,4 +64,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+div.linup-player {
+    margin: 0;
+}
+span.slot {
+    display: inline-block;
+    margin-right: 1rem;
+}
+.tl_select.unsetwidth {
+    width: unset;
+}
 </style>

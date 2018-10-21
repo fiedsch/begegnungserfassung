@@ -1,26 +1,34 @@
 <template ref="app">
     <div>
-    <form method="GET">
-        <input type="hidden" name="homelineup" :value="home.lineup">
-        <input type="hidden" name="awaylineup" :value="away.lineup">
-        <Aufstellung
-                :home="home"
-                :away="away"
-                :slots="numSlots"
-        ></Aufstellung>
-        <ResultsTable
-                :home="home"
-                :away="away"
-                :spielplan="spielplan"
-        ></ResultsTable>
-        <HighlightsEntry :available="availableAll"></HighlightsEntry>
-        <input type="submit" @click.prevent="showFormData">
-    </form>
-    <h3>Formdata</h3>
-    <pre>{{ formData }}</pre>
+        <div id="tl_buttons">
+            <a href="contao?do=liga.begegnungserfassung" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
+        </div>
+        <form method="POST" class="tl_form tl_edit_form" enctype="application/x-www-form-urlencoded">
+            <div class="tl_formbody_edit">
                 <input type="hidden" name="REQUEST_TOKEN" :value="requestToken">
                 <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung">
                 <input type="hidden" name="id" :value="begegnungId">
+                <input type="hidden" name="homelineup" :value="home.lineup">
+                <input type="hidden" name="awaylineup" :value="away.lineup">
+                <Aufstellung
+                  :home="home"
+                  :away="away"
+                  :slots="numSlots"
+                ></Aufstellung>
+                <ResultsTable
+                  :home="home"
+                  :away="away"
+                  :spielplan="spielplan"
+                ></ResultsTable>
+                <HighlightsEntry :available="availableAll"></HighlightsEntry>
+            </div>
+            <div class="tl_formbody_submit">
+                <div class="tl_submit_container">
+                    <!-- <button type="submit" name="save" id="save" class="tl_submit" accesskey="s" @click.prevent="showFormData">Speichern</button> -->
+                    <button type="submit" name="save" id="save" class="tl_submit" accesskey="s">Speichern</button>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -46,21 +54,23 @@ export default {
             away: { key: "away", name: "", available: [ ], lineup: [ ], played: [ ] },
             spielplan: [ ],
             numSlots: 0,
-            formData: { test: 'initial' }
+            formData: { test: 'initial' },
             requestToken: '',
             begegnungId: ''
         }
     },
     computed: {
         availableAll() {
-            return [...this.home.available , ...this.away.available].filter(function(el) { return el.id > 0 })
+            let alllineup = [...this.home.lineup, ...this.away.lineup]
+            return [...this.home.available , ...this.away.available].filter(function(el) {
+                return el.id > 0 && alllineup.includes(el.id)
+            })
+
         }
     },
     methods: {
         showFormData() {
-            let form = document.querySelector('form');
-            let data = new FormData(form);
-            this.formData = { test: Array.from(data) }
+            this.formData = Array.from(new FormData(document.querySelector('form')));
         },
         initializeData() {
             if (this.home.lineup.length === 0) {
@@ -106,11 +116,19 @@ export default {
         },
         setNumSlots(value) {
             this.numSlots = value
+        },
+        setRequestToken(value) {
+            this.requestToken = value
+        },
+        setBegegnungId(value) {
+            this.begegnungId = value
         }
     }
 }
 </script>
 
 <style>
-
+.tl_formbody_edit {
+    padding: 1rem;
+}
 </style>

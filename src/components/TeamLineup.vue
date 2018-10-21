@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="team-lineup">
         <h2>{{ name }}</h2>
         <div v-for="i in slots" :key="'lps_'+i">
             <LineupPlayerSelect
@@ -65,4 +65,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.team-lineup h2 {
+    margin-bottom: 1rem;
+}
 </style>

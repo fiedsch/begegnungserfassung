@@ -1,24 +1,26 @@
 <template>
     <span>
         <select
+            class="tl_select unsetwidth"
             title="SpleierSelect"
-            v-model="selected"  v-bind:class="{ double: isDouble, winner: isWinner, loser: isLoser }"
+            v-model="selected"  v-bind:class="{ double: isDouble, winner: isWinner, looser: isLooser }"
             :name="selectname" tabindex="-1">
             <option
-                    v-for="lineupindex in team.lineup.length"
-                    :key="'pl1_'+(lineupindex-1)"
-                    :value="lineupindex-1">{{ spielername(lineupindex-1) }}
+                v-for="lineupindex in team.lineup.length"
+                :key="'pl1_'+(lineupindex-1)"
+                :value="lineupindex-1">{{ spielername(lineupindex-1) }}
             </option>
         </select>
         <select
-                title="SpleierSelect2"
+            class="tl_select unsetwidth"
+            title="SpleierSelect2"
             v-if="isDouble"
-            v-model="selected2" v-bind:class="{ double: isDouble, winner: isWinner, loser: isLoser }"
+            v-model="selected2" v-bind:class="{ double: isDouble, winner: isWinner, looser: isLooser }"
             :name="selectname2" tabindex="-1">
             <option
-                    v-for="lineupindex in team.lineup.length"
-                    :key="'pl2_'+(lineupindex-1)"
-                    :value="lineupindex-1">{{ spielername(lineupindex-1) }}
+                v-for="lineupindex in team.lineup.length"
+                :key="'pl2_'+(lineupindex-1)"
+                :value="lineupindex-1">{{ spielername(lineupindex-1) }}
             </option>
         </select>
     </span>
@@ -50,7 +52,7 @@ export default {
         }
     },
     methods: {
-        spielername: function (index) {
+        spielername: function(index) {
             if (typeof index === 'undefined') { index = 0; }
             let spielerid = this.team.lineup[index];
             if (typeof spielerid === 'undefined') { spielerid = 0; }
@@ -63,17 +65,17 @@ export default {
         }
     },
     computed: {
-        selectname: function () {
+        selectname() {
             return 'spieler_' + this.team.key + '_' + this.index + (this.isDouble ? '_1' : '')
         },
-        selectname2: function () {
+        selectname2() {
             return 'spieler_' + this.team.key + '_' + this.index + (this.isDouble ? '_2' : '')
         },
         selected: {
-            get: function () {
+            get() {
                 return this.team.played[this.index].ids[0]
             },
-            set: function (value) {
+            set(value) {
                 this.team.played[this.index].ids[0] = value;
                 // force update:
                 // FIXME: use set()
@@ -81,10 +83,10 @@ export default {
             }
         },
         selected2: {
-            get: function () {
+            get() {
                 return this.team.played[this.index].ids[1]
             },
-            set: function (value) {
+            set(value) {
                 this.team.played[this.index].ids[1] = value;
                 // force update:
                 // FIXME: use set()
@@ -102,7 +104,7 @@ export default {
             }
             return spiel.scores[this.team.key] > spiel.scores[other]
         },
-        isLoser() {
+        isLooser() {
             let other = this.team.key === 'home' ? 'away' : 'home';
             let spiel = this.spielplan[this.index];
             if (spiel.scores[this.team.key] == null || spiel.scores[other] == null) {
@@ -122,5 +124,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+/*
+select.winner { background-color: #dff0d8; color: #3c763d; }
+select.looser { }
+*/
 
+.tl_select.unsetwidth {
+    width: unset;
+}
 </style>

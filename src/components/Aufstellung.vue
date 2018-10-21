@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div style="width:45%;float:left">
+    <div class="aufstellung">
+        <div class="team-lineup">
             <TeamLineup
                     :name="home.name"
                     suffix="H"
@@ -9,7 +9,7 @@
                     :slots="slots"
             ></TeamLineup>
         </div>
-        <div style="width:45%;float:left">
+        <div class="team-lineup">
             <TeamLineup
                     :name="away.name"
                     suffix="G"
@@ -55,4 +55,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.aufstellung {
+    margin-top: 1rem;
+}
+.team-lineup {
+    display: inline-block;
+    margin-right: 1rem;
+}
 </style>
