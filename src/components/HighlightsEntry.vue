@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="highlights" v-if="available.length>0">
         <h2>Highlights</h2>
         <table>
             <thead>
@@ -57,4 +57,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.highlights {
+    padding-top: 2rem;
+}
+.highlights h2 {
+    margin-bottom: 1rem;
+}
+.highlighte th {
+    padding: 1rem;
+}
 </style>
