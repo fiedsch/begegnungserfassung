@@ -1,5 +1,7 @@
 # begegnungserfassung
 
+Vue applicetion for https://github.com/fiedsch/contao-ligaverwaltung-bundle (Contao Backend data entry)
+
 ## Project setup
 ```
 npm install
