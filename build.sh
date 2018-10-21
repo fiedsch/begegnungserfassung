@@ -9,4 +9,6 @@
 #      "lib": "vue-cli-service build --target lib --name begegnungserfassung src/main.js"
 #    }
 
-npm run lib
+npm run lib && \
+  sudo cp dist/begegnungserfassung.css* /Users/andreas/Project/edart-bayern.de/ligaverwaltung-bundle/src/Resources/public
+  sudo cp dist/begegnungserfassung.umd.* /Users/andreas/Project/edart-bayern.de/ligaverwaltung-bundle/src/Resources/public
