@@ -4,11 +4,11 @@
         <table>
             <thead>
             <tr>
-                <td>Spieler</td>
-                <td>180er</td>
-                <td>171er</td>
-                <td>Shortleg</td>
-                <td>Highfinish</td>
+                <th>Spieler</th>
+                <th>180er</th>
+                <th>171er</th>
+                <th>Shortleg</th>
+                <th>Highfinish</th>
             </tr>
             </thead>
             <tbody>
