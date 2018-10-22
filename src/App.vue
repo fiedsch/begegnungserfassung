@@ -64,11 +64,23 @@ export default {
             let alllineup = [...this.home.lineup, ...this.away.lineup]
             return [...this.home.available , ...this.away.available].filter(function(el) {
                 return el.id > 0 && alllineup.includes(el.id)
-            })
-
+            }).map(function(el) {
+                    return {id: el.id, name: el.name, abbrev: this.getAbbrev(el.id)};
+              }, this)
         }
     },
     methods: {
+        getAbbrev(id) {
+            let search = this.home.lineup.indexOf(id)
+            if (search > -1) {
+                return 'H' + (search+1)
+            }
+            search = this.away.lineup.indexOf(id)
+            if (search > -1) {
+                return 'G' + (search+1)
+            }
+            return id // only the id as error marker
+        },
         showFormData() {
             this.formData = Array.from(new FormData(document.querySelector('form')));
         },

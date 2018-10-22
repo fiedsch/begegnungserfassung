@@ -14,6 +14,8 @@
             <tbody>
             <tr v-for="(player, i) in available" :key="'pr_'+i">
                 <td>{{ player.name }}</td>
+            <tr v-for="(player, i) in sortedAvailable" :key="'pr_'+i">
+                <td>({{ player.abbrev }}) {{ player.name }}</td>
                 <td><input :name="'one80_'+player.id" v-model="highlights[i].scores.one80" placeholder="180er"></td>
                 <td><input :name="'one71_'+player.id" v-model="highlights[i].scores.one71" placeholder="171er"></td>
                 <td><input :name="'shortleg_'+player.id" v-model="highlights[i].scores.shortleg" placeholder="Shortlegs"></td>
@@ -44,6 +46,13 @@ export default {
         }
     },
     computed: {
+        sortedAvailable() {
+            return this.available.sort(function(a,b) {
+                if (a.abbrev.match(/^H/) && b.abbrev.match(/^G/)) { return -1 }
+                if (a.abbrev.match(/^G/) && b.abbrev.match(/^H/)) { return +1 }
+                return a.abbrev > b.abbrev ? +1 : -1
+            })
+        },
         highlights() {
             let result = [ ];
             this.available.forEach((el, i) => {
