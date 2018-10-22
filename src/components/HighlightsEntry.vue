@@ -18,8 +18,8 @@
                 <td>({{ player.abbrev }}) {{ player.name }}</td>
                 <td><input :name="'one80_'+player.id" v-model="highlights[i].scores.one80" placeholder="180er"></td>
                 <td><input :name="'one71_'+player.id" v-model="highlights[i].scores.one71" placeholder="171er"></td>
-                <td><input :name="'shortleg_'+player.id" v-model="highlights[i].scores.shortleg" placeholder="Shortlegs"></td>
                 <td><input :name="'highfinish_'+player.id" v-model="highlights[i].scores.highfinish" placeholder="Highfinish"></td>
+                <td><input :name="'shortleg_'+player.id" v-model="highlights[i].scores.shortleg" placeholder="Shortlegs"></td>
             </tr>
             </tbody>
         </table>
