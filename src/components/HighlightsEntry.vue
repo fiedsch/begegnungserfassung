@@ -12,8 +12,6 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(player, i) in available" :key="'pr_'+i">
-                <td>{{ player.name }}</td>
             <tr v-for="(player, i) in sortedAvailable" :key="'pr_'+i">
                 <td>({{ player.abbrev }}) {{ player.name }}</td>
                 <td><input :name="'one80_'+player.id" v-model="highlights[i].scores.one80" placeholder="180er"></td>
@@ -42,7 +40,6 @@ export default {
     },
     data() {
         return {
-
         }
     },
     computed: {
