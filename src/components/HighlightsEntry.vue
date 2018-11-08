@@ -44,7 +44,8 @@ export default {
     },
     computed: {
         sortedAvailable() {
-            return this.available.sort(function(a,b) {
+            let tmp = this.available // do not change this.available by sorting it
+            return tmp.sort(function(a,b) {
                 if (a.abbrev.match(/^H/) && b.abbrev.match(/^G/)) { return -1 }
                 if (a.abbrev.match(/^G/) && b.abbrev.match(/^H/)) { return +1 }
                 return a.abbrev > b.abbrev ? +1 : -1
