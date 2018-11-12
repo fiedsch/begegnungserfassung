@@ -7,8 +7,8 @@
                 <th>Spieler</th>
                 <th>180er</th>
                 <th>171er</th>
-                <th>Shortleg</th>
                 <th>Highfinish</th>
+                <th>Shortleg</th>
             </tr>
             </thead>
             <tbody>
