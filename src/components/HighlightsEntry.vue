@@ -44,7 +44,7 @@ export default {
     },
     computed: {
         sortedAvailable() {
-            let tmp = this.available // do not change this.available by sorting it
+            let tmp = this.available.slice(0) // do not change this.available by sorting it (work on a clone)
             return tmp.sort(function(a,b) {
                 if (a.abbrev.match(/^H/) && b.abbrev.match(/^G/)) { return -1 }
                 if (a.abbrev.match(/^G/) && b.abbrev.match(/^H/)) { return +1 }
