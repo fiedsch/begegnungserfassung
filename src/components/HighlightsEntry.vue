@@ -14,10 +14,11 @@
             <tbody>
             <tr v-for="(player, i) in sortedAvailable" :key="'pr_'+i">
                 <td>({{ player.abbrev }}) {{ player.name }}</td>
-                <td><input :name="'one80_'+player.id" v-model="highlights[i].scores.one80" placeholder="180er"></td>
-                <td><input :name="'one71_'+player.id" v-model="highlights[i].scores.one71" placeholder="171er"></td>
-                <td><input :name="'highfinish_'+player.id" v-model="highlights[i].scores.highfinish" placeholder="Highfinish"></td>
-                <td><input :name="'shortleg_'+player.id" v-model="highlights[i].scores.shortleg" placeholder="Shortlegs"></td>
+
+                <td><NumberInput :inputname="'one80_'+player.id" :placeholder="'180er'" :value="highlights[i].scores.one80"></NumberInput></td>
+                <td><NumberInput :inputname="'one71_'+player.id" :placeholder="'171er'" :value="highlights[i].scores.one71"></NumberInput></td>
+                <td><NumberListInput :inputname="'highfinish_'+player.id" :placeholder="'Highfinishes'" :value="highlights[i].scores.highfinish"></NumberListInput></td>
+                <td><NumberListInput :inputname="'shortleg_'+player.id" :placeholder="'Shortlegs'" :value="highlights[i].scores.shortleg"></NumberListInput></td>
             </tr>
             </tbody>
         </table>
@@ -29,8 +30,15 @@
  * Eingabe von Highhlights für einzelne Spieler
  */
 
+import NumberInput from './NumberInput.vue'
+import NumberListInput from './NumberListInput.vue'
+
 export default {
     name: 'HighlightsEntry',
+    components: {
+        NumberInput,
+        NumberListInput
+    },
     props: {
         // Verfügbare Spieler: Array von Objekten, jeweils ID und Name der verfügbaren Spieler
         available: {
@@ -70,7 +78,10 @@ export default {
 .highlights h2 {
     margin-bottom: 1rem;
 }
-.highlighte th {
+.highlights th {
     padding: 1rem;
+}
+.highlights td {
+    padding: .3rem;
 }
 </style>
