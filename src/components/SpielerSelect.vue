@@ -3,7 +3,7 @@
         <select
             class="tl_select unsetwidth"
             title="SpleierSelect"
-            v-model="selected"  v-bind:class="{ double: isDouble, winner: isWinner, looser: isLooser }"
+            v-model="selected"  v-bind:class="{ double: isDouble, winner: isWinner, loser: isLoser }"
             :name="selectname" tabindex="-1">
             <option
                 v-for="lineupindex in team.lineup.length"
@@ -15,7 +15,7 @@
             class="tl_select unsetwidth"
             title="SpleierSelect2"
             v-if="isDouble"
-            v-model="selected2" v-bind:class="{ double: isDouble, winner: isWinner, looser: isLooser }"
+            v-model="selected2" v-bind:class="{ double: isDouble, winner: isWinner, loser: isLoser }"
             :name="selectname2" tabindex="-1">
             <option
                 v-for="lineupindex in team.lineup.length"
@@ -104,7 +104,7 @@ export default {
             }
             return spiel.scores[this.team.key] > spiel.scores[other]
         },
-        isLooser() {
+        isLoser() {
             let other = this.team.key === 'home' ? 'away' : 'home';
             let spiel = this.spielplan[this.index];
             if (spiel.scores[this.team.key] == null || spiel.scores[other] == null) {
@@ -126,7 +126,7 @@ export default {
 <style>
 /*
 select.winner { background-color: #dff0d8; color: #3c763d; }
-select.looser { }
+select.loser { }
 */
 
 .tl_select.unsetwidth {
