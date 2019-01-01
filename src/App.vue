@@ -10,17 +10,21 @@
                 <input type="hidden" name="id" :value="begegnungId">
                 <input type="hidden" name="homelineup" :value="home.lineup">
                 <input type="hidden" name="awaylineup" :value="away.lineup">
+                <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
+                <label for="showspielerpass">Spielerpass-Nummern anzeigen</label>
                 <Aufstellung
                   :home="home"
                   :away="away"
                   :slots="numSlots"
+                  :showspielerpass="showspielerpass"
                 ></Aufstellung>
                 <ResultsTable
                   :home="home"
                   :away="away"
                   :spielplan="spielplan"
+                  :showspielerpass="showspielerpass"
                 ></ResultsTable>
-                <HighlightsEntry :available="availableAll"></HighlightsEntry>
+                <HighlightsEntry :available="availableAll" :showspielerpass="showspielerpass"></HighlightsEntry>
             </div>
             <div class="tl_formbody_submit">
                 <div class="tl_submit_container">
@@ -56,7 +60,8 @@ export default {
             numSlots: 0,
             formData: { test: 'initial' },
             requestToken: '',
-            begegnungId: ''
+            begegnungId: '',
+            showspielerpass: false
         }
     },
     computed: {
@@ -65,7 +70,7 @@ export default {
             return [...this.home.available , ...this.away.available].filter(function(el) {
                 return el.id > 0 && alllineup.includes(el.id)
             }).map(function(el) {
-                    return {id: el.id, name: el.name, abbrev: this.getAbbrev(el.id)};
+                    return {id: el.id, name: el.name, abbrev: this.getAbbrev(el.id), pass: el.pass};
               }, this)
         }
     },

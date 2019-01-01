@@ -13,7 +13,10 @@
             </thead>
             <tbody>
             <tr v-for="(player, i) in sortedAvailable" :key="'pr_'+i">
-                <td>({{ player.abbrev }}) {{ player.name }}</td>
+                <td>
+                    ({{ player.abbrev }}) {{ player.name }}
+                    <span v-show="showspielerpass">({{ player.pass }})</span>
+                </td>
 
                 <td><NumberInput :inputname="'one80_'+player.id" :placeholder="'180er'" :value="highlights[i].scores.one80"></NumberInput></td>
                 <td><NumberInput :inputname="'one71_'+player.id" :placeholder="'171er'" :value="highlights[i].scores.one71"></NumberInput></td>
@@ -44,6 +47,10 @@ export default {
         available: {
             type: Array,
             required: true
+        },
+        showspielerpass: {
+            type: Boolean,
+            default: false
         }
     },
     data() {

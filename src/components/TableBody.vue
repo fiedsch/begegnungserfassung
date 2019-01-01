@@ -5,8 +5,8 @@
         :key="'row_'+index"
     >
         <td><span class="slot">{{ index+1 }}</span></td>
-        <td><SpielerSelect :team="home" :position="spiel.home" :index="index" :spielplan="spielplan"></SpielerSelect></td>
-        <td><SpielerSelect :team="away" :position="spiel.away" :index="index" :spielplan="spielplan"></SpielerSelect></td>
+        <td><SpielerSelect :team="home" :position="spiel.home" :index="index" :spielplan="spielplan" :showspielerpass="showspielerpass"></SpielerSelect></td>
+        <td><SpielerSelect :team="away" :position="spiel.away" :index="index" :spielplan="spielplan" :showspielerpass="showspielerpass"></SpielerSelect></td>
         <td class="narrow centered"><SpielerScore :team="home" :index="index" :spielplan="spielplan"></SpielerScore></td>
         <td class="narrow centered"><SpielerScore :team="away" :index="index" :spielplan="spielplan"></SpielerScore></td>
         <td class="narrow centered"><SpielErgebnis class="spiel" :index="index" :spielplan="spielplan"></SpielErgebnis></td>
@@ -56,6 +56,10 @@ export default {
         spielplan: {
             type: Array,
             required: true
+        },
+        showspielerpass: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {

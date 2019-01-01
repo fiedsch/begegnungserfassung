@@ -49,6 +49,10 @@ export default {
         spielplan: {
             type: Array,
             required: true
+        },
+        showspielerpass: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {
@@ -61,7 +65,7 @@ export default {
             });
             if (player.length === 0) { return "Kein Name für Pos. "+index; }
             let suffix = this.team.key === 'home' ? "H" : "G";
-            return "("+suffix+(index+1)+") " + player[0].name;
+            return "("+suffix+(index+1)+") " + player[0].name + ( this.showspielerpass && player[0].pass>0 ? " ("+player[0].pass+")" :'' );
         }
     },
     computed: {

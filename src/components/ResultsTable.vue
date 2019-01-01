@@ -2,7 +2,7 @@
     <div class="results-table">
         <table>
             <TableHeader :home="home" :away="away"></TableHeader>
-            <TableBody :home="home" :away="away" :spielplan="spielplan"></TableBody>
+            <TableBody :home="home" :away="away" :spielplan="spielplan" :showspielerpass="showspielerpass"></TableBody>
         </table>
     </div>
 </template>
@@ -32,6 +32,10 @@ export default {
         spielplan: {
             type: Array,
             required: true
+        },
+        showspielerpass: {
+            type: Boolean,
+            default: false
         }
     }
 }

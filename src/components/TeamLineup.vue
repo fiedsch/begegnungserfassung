@@ -8,6 +8,7 @@
                     :available="available"
                     :lineup="lineup"
                     @lineupplayerchanged="lineupplayerchanged"
+                    :showspielerpass="showspielerpass"
             ></LineupPlayerSelect>
         </div>
     </div>
@@ -50,6 +51,10 @@ export default {
         slots: {
             type: Number,
             required: true
+        },
+        showspielerpass: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {

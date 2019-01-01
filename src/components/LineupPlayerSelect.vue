@@ -6,8 +6,9 @@
                 v-for="a in available" :value="a.id"
                 :key="'player_'+a.id"
                 :class="{ isNotAvailable: !isAvailable(a.id) }"
-                :disabled="!isAvailable(a.id)"
-            >{{ a.name }}</option>
+                :disabled="!isAvailable(a.id)">
+                {{ a.name }} <span v-if="showspielerpass && a.pass > 0">({{ a.pass }})</span>
+            </option>
         </select>
     </div>
 </template>
@@ -37,11 +38,15 @@ export default {
         suffix: {
             type: String,
             required: true
+        },
+        showspielerpass: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         return {
-            selected: 0
+            selected: this.slotNumber <= this.lineup.length ? this.lineup[this.slotNumber-1] : 0
         }
     },
     computed: {

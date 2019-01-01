@@ -7,6 +7,7 @@
                     :available="home.available"
                     :lineup="home.lineup"
                     :slots="slots"
+                    :showspielerpass="showspielerpass"
             ></TeamLineup>
         </div>
         <div class="team-lineup">
@@ -16,6 +17,7 @@
                     :available="away.available"
                     :lineup="away.lineup"
                     :slots="slots"
+                    :showspielerpass="showspielerpass"
             ></TeamLineup>
         </div>
     </div>
@@ -48,6 +50,10 @@ export default {
         slots: {
             type: Number,
             required: true
+        },
+        showspielerpass: {
+            type: Boolean,
+            default: false
         }
     }
 }
