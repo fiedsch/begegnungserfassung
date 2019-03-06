@@ -15,8 +15,8 @@
 <script>
     // wird aus JS-Datei eingelesen
     var spielplan = [
-        {home: [0], away: [0]},
-        {home: [1], away: [1]},
+        {home: [0], away: [0], scores: {'away': 2, 'home': 1 }},
+        {home: [1], away: [1], scores: {'away': 1, 'home': 2 }},
         {home: [2], away: [2]},
         {home: [3], away: [3]},
         {home: [0], away: [1]},
@@ -42,14 +42,14 @@
         home: {
             key: "home",
             name: "Mannschaft eins",
-            available: [ {name: 'John Doe', id: 1319},{name: 'Max Mustermann', id: 1316},{name: 'Jane Dow', id: 1321},{name: 'Elke Musterfrau', id: 1318},{name: 'kein Spieler',id: 0} ],
-            lineup: [ ],
+            available: [ {name: 'John Doe', id: 1319, pass:1},{name: 'Max Mustermann', id: 1316, pass:2},{name: 'Jane Dow', id: 1321, pass:3},{name: 'Elke Musterfrau', id: 1318, pass:4},{name: 'kein Spieler',id: 0, pass:0} ],
+            lineup: [ 1319, 1321, 1316, 1318 ],
             played: [ ]
         },
         away: {
             key: "away",
             name: "Die Zweite",
-            available: [ {name: 'Christian XXX', id: 1335},{name: 'Christian YYY', id: 1292},{name: 'Claudia ZZZ', id: 1291},{name: 'Helmut AAA', id: 1293},{name: 'Ingo BBB', id: 1290},{name: 'Stefan CCC', id: 1336},{name: 'Toni DDD', id: 1337},{name: 'Waldemar EEE', id: 1338},{name: 'kein Spieler',id: 0} ],
+            available: [ {name: 'Christian XXX', id: 1335, pass:5},{name: 'Christian YYY', id: 1292, pass:6},{name: 'Claudia ZZZ', id: 1291, pass:7},{name: 'Helmut AAA', id: 1293, pass:8},{name: 'Ingo BBB', id: 1290, pass:9},{name: 'Stefan CCC', id: 1336, pass:10},{name: 'Toni DDD', id: 1337, pass:11},{name: 'Waldemar EEE', id: 1338, pass:12},{name: 'kein Spieler',id: 0, pass:0} ],
             lineup: [ ],
             played: [ ]
         },
