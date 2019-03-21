@@ -3,6 +3,12 @@
         <div id="tl_buttons">
             <a href="contao?do=liga.begegnungserfassung" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
         </div>
+        <Aufstellung
+                :home="home"
+                :away="away"
+                :slots="numSlots"
+                :showspielerpass="showspielerpass"
+        ></Aufstellung>
         <form method="POST" class="tl_form tl_edit_form" enctype="application/x-www-form-urlencoded">
             <div class="tl_formbody_edit">
                 <input type="hidden" name="REQUEST_TOKEN" :value="requestToken">
@@ -12,12 +18,6 @@
                 <input type="hidden" name="awaylineup" :value="away.lineup">
                 <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
                 <label for="showspielerpass">Spielerpass-Nummern anzeigen</label>
-                <Aufstellung
-                  :home="home"
-                  :away="away"
-                  :slots="numSlots"
-                  :showspielerpass="showspielerpass"
-                ></Aufstellung>
                 <ResultsTable
                   :home="home"
                   :away="away"
