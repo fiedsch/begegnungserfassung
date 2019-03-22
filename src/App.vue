@@ -16,6 +16,7 @@
                 <input type="hidden" name="id" :value="begegnungId">
                 <input type="hidden" name="homelineup" :value="home.lineup">
                 <input type="hidden" name="awaylineup" :value="away.lineup">
+                <input type="hidden" name="spielplan_code" :value="spielplan_code">
                 <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
                 <label for="showspielerpass">Spielerpass-Nummern anzeigen</label>
                 <ResultsTable
@@ -57,6 +58,7 @@ export default {
             home: { key: "home", name: "", available: [ ], lineup: [ ], played: [ ] },
             away: { key: "away", name: "", available: [ ], lineup: [ ], played: [ ] },
             spielplan: [ ],
+            spielplan_code: '',
             numSlots: 0,
             formData: { test: 'initial' },
             requestToken: '',
@@ -130,6 +132,9 @@ export default {
         },
         setSpielplan(data) {
             this.spielplan = data
+        },
+        setSpielplanCode(data) {
+            this.spielplan_code = data
         },
         setNumSlots(value) {
             this.numSlots = value
