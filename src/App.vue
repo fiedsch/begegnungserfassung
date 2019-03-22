@@ -29,8 +29,7 @@
             </div>
             <div class="tl_formbody_submit">
                 <div class="tl_submit_container">
-                    <!-- <button type="submit" name="save" id="save" class="tl_submit" accesskey="s" @click.prevent="showFormData">Speichern</button> -->
-                    <button type="submit" name="save" id="save" class="tl_submit" accesskey="s">Speichern</button>
+                    <button type="submit" name="save" id="save" class="tl_submit" accesskey="s" @click.prevent="saveFormData">Speichern</button>
                 </div>
             </div>
         </form>
@@ -88,8 +87,21 @@ export default {
             }
             return id // only the id as error marker
         },
-        showFormData() {
-            this.formData = Array.from(new FormData(document.querySelector('form')));
+        saveFormData() {
+            this.formData = new FormData(document.querySelector('form'));
+            // URL aus der Contao-Installation mit installiertem ligaverwaltung-bundle
+            let url = '/ligaverwaltung/erfassen/'+this.begegnungId
+            this.$http.post(url, this.formData).then(
+                (result) => {
+                    alert(JSON.stringify(result.data))
+                    // TODO: anstelle des alert()s ein visuelles Feedback für
+                    // den User, daß das Speichern seiner Daten erfolgreich war.
+                }
+            ).catch(
+                (error) => {
+                    alert(error)
+                }
+            )
         },
         initializeData() {
             if (this.home.lineup.length === 0) {
