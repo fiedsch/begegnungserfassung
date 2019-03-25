@@ -1,21 +1,23 @@
 <template ref="app">
     <div>
-        <div id="tl_buttons">
+        <div v-if="isBackendView" id="tl_buttons">
             <a href="contao?do=liga.begegnungserfassung" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
         </div>
+        <pre>{{ allData }}</pre>
         <Aufstellung
                 :home="home"
                 :away="away"
                 :slots="numSlots"
                 :showspielerpass="showspielerpass"
         ></Aufstellung>
-        <form method="POST" class="tl_form tl_edit_form" enctype="application/x-www-form-urlencoded">
+        <form method="POST" id="vue_begegnungserfassung" class="tl_form tl_edit_form" enctype="application/x-www-form-urlencoded">
             <div class="tl_formbody_edit">
                 <input type="hidden" name="REQUEST_TOKEN" :value="requestToken">
                 <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung">
                 <input type="hidden" name="id" :value="begegnungId">
                 <input type="hidden" name="homelineup" :value="home.lineup">
                 <input type="hidden" name="awaylineup" :value="away.lineup">
+                <input type="hidden" name="json_data" :value="dataToSubmit">
                 <input type="hidden" name="spielplan_code" :value="spielplan_code">
                 <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
                 <label for="showspielerpass">Spielerpass-Nummern anzeigen</label>
@@ -29,7 +31,7 @@
             </div>
             <div class="tl_formbody_submit">
                 <div class="tl_submit_container">
-                    <button type="submit" name="save" id="save" class="tl_submit" accesskey="s" @click.prevent="saveFormData">Speichern</button>
+                    <button type="submit" name="save" id="save" class="btn btn-primary tl_submit" accesskey="s" @click.prevent="saveFormData">Speichern</button>
                 </div>
             </div>
         </form>
@@ -59,20 +61,31 @@ export default {
             spielplan: [ ],
             spielplan_code: '',
             numSlots: 0,
-            formData: { test: 'initial' },
             requestToken: '',
             begegnungId: '',
-            showspielerpass: false
+            showspielerpass: false,
+            isBackendView: false
         }
     },
     computed: {
         availableAll() {
             let alllineup = [...this.home.lineup, ...this.away.lineup]
-            return [...this.home.available , ...this.away.available].filter(function(el) {
+            return [...this.home.available , ...this.away.available].filter((el) => {
                 return el.id > 0 && alllineup.includes(el.id)
-            }).map(function(el) {
+            }).map((el) => {
                     return {id: el.id, name: el.name, abbrev: this.getAbbrev(el.id), pass: el.pass};
-              }, this)
+            })
+        },
+        dataToSubmit() {
+            return JSON.stringify({
+                spielplan: this.spielplan,
+                home: this.home,
+                away: this.away,
+                highlights: {
+                    home: {},
+                    away: {}
+                }
+            })
         }
     },
     methods: {
@@ -88,10 +101,10 @@ export default {
             return id // only the id as error marker
         },
         saveFormData() {
-            this.formData = new FormData(document.querySelector('form'));
+            let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
             // URL aus der Contao-Installation mit installiertem ligaverwaltung-bundle
-            let url = '/ligaverwaltung/erfassen/'+this.begegnungId
-            this.$http.post(url, this.formData).then(
+            let url = '/ligaverwaltung/erfassen/'+this.begegnungId;
+            this.$http.post(url, formData).then(
                 (result) => {
                     alert(JSON.stringify(result.data))
                     // TODO: anstelle des alert()s ein visuelles Feedback für
@@ -156,6 +169,9 @@ export default {
         },
         setBegegnungId(value) {
             this.begegnungId = value
+        },
+        setIsBackendView(value) {
+            this.isBackendView = value
         }
     }
 }

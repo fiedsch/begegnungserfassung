@@ -26,4 +26,5 @@ vm.$children[0].setRequestToken(appdata.requestToken)
 vm.$children[0].setBegegnungId(appdata.begegnungId)
 vm.$children[0].initializeData()
 vm.$children[0].setSpielplanCode(appdata.spielplan_code)
+vm.$children[0].setIsBackendView(appdata.isBackendView)
 
