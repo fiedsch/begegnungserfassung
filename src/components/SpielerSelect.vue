@@ -2,7 +2,7 @@
     <span>
         <select
             class="tl_select unsetwidth"
-            title="SpleierSelect"
+            title="SpielerSelect"
             v-model="selected"  v-bind:class="{ double: isDouble, winner: isWinner, loser: isLoser }"
             :name="selectname" tabindex="-1">
             <option
