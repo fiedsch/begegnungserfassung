@@ -3,7 +3,6 @@
         <div v-if="isBackendView" id="tl_buttons">
             <a href="contao?do=liga.begegnungserfassung" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
         </div>
-        <pre>{{ allData }}</pre>
         <Aufstellung
                 :home="home"
                 :away="away"
@@ -57,27 +56,48 @@ export default {
     },
     data() {
         return {
-            home: { key: "home", name: "", available: [ ], lineup: [ ], played: [ ] },
-            away: { key: "away", name: "", available: [ ], lineup: [ ], played: [ ] },
-            spielplan: [ ],
-            spielplan_code: '',
-            numSlots: 0,
-            requestToken: '',
-            begegnungId: '',
-            showspielerpass: false,
-            isBackendView: false
+            showspielerpass: false
         }
     },
     computed: {
-        availableAll() {
-            let alllineup = [...this.home.lineup, ...this.away.lineup]
-            return [...this.home.available , ...this.away.available].filter((el) => {
-                return el.id > 0 && alllineup.includes(el.id)
-            }).map((el) => {
-                    return {id: el.id, name: el.name, abbrev: this.getAbbrev(el.id), pass: el.pass};
-            })
+        isBackendView() {
+            return this.$store.state.isBackendView
         },
+
+        // Für <Aufstellung>, das sich diese Daten aber letztlich aus dem Store selbst holt
+        // und für die <ResultsTable>
+        home() {
+            return this.$store.state.home
+        },
+        away() {
+            return this.$store.state.away
+        },
+        slots() {
+            return this.$store.state.slots
+        },
+        numSlots() {
+            return this.$store.state.numSlots
+        },
+        // Für das <form>
+        requestToken() {
+            return this.$store.state.requestToken
+        },
+        begegnungId() {
+            return this.$store.state.begegnungId
+        },
+        spielplan() {
+            return this.$store.state.spielplan
+        },
+        spielplan_code() {
+            return this.$store.state.spielplan_code
+        },
+        // legacy
+        availableAll() {
+            return this.$store.getters.availableAll
+        },
+
         dataToSubmit() {
+            // TODO: aus Store
             return JSON.stringify({
                 spielplan: this.spielplan,
                 home: this.home,
@@ -90,17 +110,6 @@ export default {
         }
     },
     methods: {
-        getAbbrev(id) {
-            let search = this.home.lineup.indexOf(id)
-            if (search > -1) {
-                return 'H' + (search+1)
-            }
-            search = this.away.lineup.indexOf(id)
-            if (search > -1) {
-                return 'G' + (search+1)
-            }
-            return id // only the id as error marker
-        },
         saveFormData() {
             let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
             // URL aus der Contao-Installation mit installiertem ligaverwaltung-bundle
@@ -117,62 +126,16 @@ export default {
                 }
             )
         },
-        initializeData() {
-            if (this.home.lineup.length === 0) {
-                this.home.lineup = this.makeLineuparray(this.numSlots)
-            }
-            if (this.away.lineup.length === 0) {
-                this.away.lineup = this.makeLineuparray(this.numSlots)
-            }
-            this.spielplan.forEach(function (entry) {
-                if (typeof entry.scores === 'undefined') {
-                    entry.scores = {home: null, away: null}
-                }
-                if (typeof entry.result === 'undefined') {
-                    entry.result = null;
-                }
-            });
-            if (this.home.played.length === 0) {
-                this.spielplan.forEach(function (entry, i) {
-                    this.home.played.push({ids: entry.home, slot: i + 1})
-                }, this)
-            }
-            if (this.away.played.length === 0) {
-                this.spielplan.forEach(function (entry, i) {
-                    this.away.played.push({ids: entry.away, slot: i + 1})
-                }, this);
-            }
-        },
-        makeLineuparray(n) {
-            let arr = Array.apply(null, new Array(n));
-            // eslint-disable-next-line
-            return arr.map(function () {
-                return 0
-            });
-        },
-        setHome(data) {
-            this.home = data
-        },
-        setAway(data) {
-            this.away = data
-        },
-        setSpielplan(data) {
-            this.spielplan = data
-        },
-        setSpielplanCode(data) {
-            this.spielplan_code = data
-        },
-        setNumSlots(value) {
-            this.numSlots = value
-        },
-        setRequestToken(value) {
-            this.requestToken = value
-        },
-        setBegegnungId(value) {
-            this.begegnungId = value
-        },
-        setIsBackendView(value) {
-            this.isBackendView = value
+        setData(data) {
+            this.$store.dispatch("setNumSlots", data.numSlots)
+            this.$store.dispatch("setSpielplan", data.spielplan)
+            this.$store.dispatch("setHome", data.home)
+            this.$store.dispatch("setAway", data.away)
+            this.$store.dispatch("setRequestToken", undefined !== data.requestToken ? data.requestToken : '')
+            this.$store.dispatch("setBegegnungId", undefined !== data.begegnungId ? data.begegnungId : 0)
+            this.$store.dispatch("initializeData")
+            this.$store.dispatch("setSpielplanCode", data.spielplan_code)
+            this.$store.dispatch("setIsBackendView", undefined !== data.isBackendView ? data.isBackendView : false)
         }
     }
 }

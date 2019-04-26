@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import axios from 'axios'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
@@ -10,6 +11,7 @@ Vue.prototype.$http = axios
 var appdata = data !== undefined ? data : { }
 
 var vm = new Vue({
+    store,
     el: '#begegnungserfassung',
     render: h => h(App)
 })
@@ -18,13 +20,4 @@ var vm = new Vue({
  * FIXME(?): Es sollte eleganter gehen, als davon auszugehen, daß wir genau ein
  * Kind-Element haben (die App-Komponente) und dann dieses zu verwenden.
  */
-vm.$children[0].setNumSlots(appdata.numSlots)
-vm.$children[0].setSpielplan(appdata.spielplan)
-vm.$children[0].setHome(appdata.home)
-vm.$children[0].setAway(appdata.away)
-vm.$children[0].setRequestToken(appdata.requestToken)
-vm.$children[0].setBegegnungId(appdata.begegnungId)
-vm.$children[0].initializeData()
-vm.$children[0].setSpielplanCode(appdata.spielplan_code)
-vm.$children[0].setIsBackendView(appdata.isBackendView)
-
+vm.$children[0].setData(appdata)
