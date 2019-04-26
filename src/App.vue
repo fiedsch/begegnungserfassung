@@ -15,8 +15,9 @@
                 <input type="hidden" name="REQUEST_TOKEN" :value="requestToken">
                 <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung">
                 <input type="hidden" name="id" :value="begegnungId">
-                <input type="hidden" name="homelineup" :value="home.lineup">
-                <input type="hidden" name="awaylineup" :value="away.lineup">
+                <!-- sind auch in json_data enthalten => sollten entfallen können -->
+                <!-- <input type="hidden" name="homelineup" :value="home.lineup"> -->
+                <!-- <input type="hidden" name="awaylineup" :value="away.lineup"> -->
                 <input type="hidden" name="json_data" :value="dataToSubmit">
                 <input type="hidden" name="spielplan_code" :value="spielplan_code">
                 <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
@@ -82,8 +83,8 @@ export default {
                 home: this.home,
                 away: this.away,
                 highlights: {
-                    home: {},
-                    away: {}
+                    home: { }, // TODO: mit Daten füllen
+                    away: { }
                 }
             })
         }
