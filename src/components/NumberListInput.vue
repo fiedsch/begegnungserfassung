@@ -1,9 +1,11 @@
 <template>
     <input
             class="form-control numberlist-input" :class="{'valid':isValid, 'invalid':!isValid}"
-            :name="inputname" v-model="val"
+            :name="inputname"
             :placeholder="placeholder"
             autocomplete="off"
+            @change="update"
+            :value="value"
     >
 </template>
 
@@ -18,19 +20,19 @@ export default {
         placeholder: {
             type: String,
             default: ""
-        },
-        value: {
-            type: String
-        },
-    },
-    data() {
-      return {
-          val: this.value
-      }
+        }
     },
     computed: {
+        value() {
+            return this.$store.state.highlights[this.inputname]
+        },
         isValid() {
-            return String(this.val).match(/^(\d+,{0,1})*$/)
+            return undefined === this.val || String(this.val).match(/^(\d+,{0,1})*$/)
+        }
+    },
+    methods: {
+        update(event) {
+            this.$store.dispatch('setHighlight', { key: event.target.name, value: event.target.value })
         }
     }
 }

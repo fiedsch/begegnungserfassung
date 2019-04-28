@@ -13,15 +13,11 @@ export default {
         index: {
             type: Number,
             required: true
-        },
-        spielplan: {
-            type: Array,
-            required: true
         }
     },
     computed: {
         result() {
-            return this.spielplan[this.index].result
+            return this.$store.state.spielplan[this.index].result
         }
     }
 }

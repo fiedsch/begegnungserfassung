@@ -15,7 +15,7 @@
 </noscript>
 
 <script>
-    // wird aus JS-Datei eingelesen
+    // wird aus JS-Datei eingelesen (ist mit -- falls vorhanden -- bereits bekanten Ergebnissen anzureichern)
     var spielplan = [
         {home: [0], away: [0], scores: {away: 2, home: 1 }, result: "0:1"},
         {home: [1], away: [1], scores: {away: 1, home: 2 }, result: "1:0"},
@@ -83,7 +83,11 @@
         numSlots: 8,
         requestToken: 'xxx',
         begegnungId: 1234,
-        isBackendView: false
+        isBackendView: false,
+        highlights: {
+            one80_1319: '1',
+            one71_1321: '2'
+        }
     };
 </script>
 

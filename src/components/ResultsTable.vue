@@ -1,8 +1,8 @@
 <template>
     <div class="results-table">
         <table>
-            <TableHeader :home="home" :away="away"></TableHeader>
-            <TableBody :home="home" :away="away" :spielplan="spielplan" :showspielerpass="showspielerpass"></TableBody>
+            <TableHeader></TableHeader>
+            <TableBody :showspielerpass="showspielerpass"></TableBody>
         </table>
     </div>
 </template>
@@ -21,18 +21,6 @@ export default {
         TableBody
     },
     props: {
-        home: {
-            type: Object,
-            required: true
-        },
-        away: {
-            type: Object,
-            required: true
-        },
-        spielplan: {
-            type: Array,
-            required: true
-        },
         showspielerpass: {
             type: Boolean,
             default: false

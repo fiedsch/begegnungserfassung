@@ -1,3 +1,4 @@
+import Vue from 'vue'
 
 function makeLineuparray(n) {
     return Array.apply(null, new Array(n)).map(() => { return 0 })
@@ -53,5 +54,30 @@ export default {
                 state.away.played.push({ids: entry.away, slot: i + 1})
             });
         }
+    },
+    lineupPlayerChanged(state, data) {
+        if (data.suffix === 'H') {
+            Vue.set(state.home.lineup, data.slotnumber-1, data.selected)
+        } else {
+            Vue.set(state.away.lineup, data.slotnumber-1, data.selected)
+        }
+    },
+    resultsTablePlayerChanged(state, data) {
+        // data ... { key: this.team.key, index: this.index, position: 0, value: value }
+        console.log("resultsTablePlayerChanged: "+JSON.stringify(data))
+        if (data.key === 'home') {
+            //state.home.played[data.index].ids[data.position] = value;
+            Vue.set(state.home.played[data.index].ids, data.position, data.value)
+        } else {
+            // state.away.played[data.index].ids[data.position] = value;
+            Vue.set(state.away.played[data.index].ids, data.position, data.value)
+        }
+    },
+    setHighlight(state, data) {
+        Vue.set(state.highlights, data.key, data.value)
+
+    },
+    setHighlightsData(state, data) {
+        Vue.set(state, 'highlights', data)
     }
 }

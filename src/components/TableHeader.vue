@@ -19,14 +19,12 @@
 
 export default {
     name: 'TableHeader',
-    props: {
-        home: {
-            type: Object,
-            required: true
+    computed: {
+        home() {
+            return this.$store.state.home
         },
-        away: {
-              type: Object,
-            required: true
+        away() {
+            return this.$store.state.away
         }
     }
 }

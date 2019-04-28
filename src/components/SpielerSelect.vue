@@ -46,10 +46,6 @@ export default {
         index: {
             type: Number
         },
-        spielplan: {
-            type: Array,
-            required: true
-        },
         showspielerpass: {
             type: Boolean,
             default: false
@@ -69,6 +65,9 @@ export default {
         }
     },
     computed: {
+        spielplan() {
+            return this.$store.state.spielplan
+        },
         selectname() {
             return 'spieler_' + this.team.key + '_' + this.index + (this.isDouble ? '_1' : '')
         },
@@ -80,10 +79,12 @@ export default {
                 return this.team.played[this.index].ids[0]
             },
             set(value) {
-                this.team.played[this.index].ids[0] = value;
-                // force update:
-                // FIXME: use set()
-                this.team.played.push(this.team.played.pop())
+                // this.team.played[this.index].ids[0] = value;
+                // // force update:
+                // // FIXME: use set()
+                // this.team.played.push(this.team.played.pop())
+                // Use store
+                this.$store.dispatch('resultsTablePlayerChanged', { key: this.team.key, index: this.index, position: 0, value: value })
             }
         },
         selected2: {
@@ -91,10 +92,12 @@ export default {
                 return this.team.played[this.index].ids[1]
             },
             set(value) {
-                this.team.played[this.index].ids[1] = value;
-                // force update:
-                // FIXME: use set()
-                this.team.played.push(this.team.played.pop())
+                // this.team.played[this.index].ids[1] = value;
+                // // force update:
+                // // FIXME: use set()
+                // this.team.played.push(this.team.played.pop())
+                // Use store
+                this.$store.dispatch('resultsTablePlayerChanged', { key: this.team.key, index: this.index, position: 1, value: value })
             }
         },
         isWinner() {

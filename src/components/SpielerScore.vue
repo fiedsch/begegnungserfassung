@@ -24,13 +24,12 @@
         index: {
             type: Number,
             required: true
-        },
-        spielplan: {
-            type: Array,
-            required: true
         }
     },
     computed: {
+        spielplan() {
+            return this.$store.state.spielplan
+        },
         inputname: {
             get: function () {
                 return 'score_' + this.team.key + '_' + this.index

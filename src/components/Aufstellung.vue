@@ -36,24 +36,20 @@ export default {
         TeamLineup
     },
     props: {
-        // Daten zur Heimmanschaft
-        home: {
-            type: Object,
-            required: true
-        },
-        // Daten zur Auswärtsmannschaft
-        away: {
-            type: Object,
-            required: true
-        },
-        // Anzahl Spieler, die benannt (aufgestellt) werden können
-        slots: {
-            type: Number,
-            required: true
-        },
         showspielerpass: {
             type: Boolean,
             default: false
+        }
+    },
+    computed: {
+        home() {
+            return this.$store.state.home
+        },
+        away() {
+            return this.$store.state.away
+        },
+        slots() {
+            return this.$store.state.numSlots
         }
     }
 }

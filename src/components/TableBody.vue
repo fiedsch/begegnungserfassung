@@ -1,15 +1,15 @@
 <template>
     <tbody>
     <tr
-        v-for="(spiel,index) in spielplan"
+        v-for="(spiel, index) in spielplan"
         :key="'row_'+index"
     >
         <td><span class="slot">{{ index+1 }}</span></td>
-        <td><SpielerSelect :team="home" :position="spiel.home" :index="index" :spielplan="spielplan" :showspielerpass="showspielerpass"></SpielerSelect></td>
-        <td><SpielerSelect :team="away" :position="spiel.away" :index="index" :spielplan="spielplan" :showspielerpass="showspielerpass"></SpielerSelect></td>
-        <td class="narrow centered"><SpielerScore :team="home" :index="index" :spielplan="spielplan"></SpielerScore></td>
-        <td class="narrow centered"><SpielerScore :team="away" :index="index" :spielplan="spielplan"></SpielerScore></td>
-        <td class="narrow centered"><SpielErgebnis class="spiel" :index="index" :spielplan="spielplan"></SpielErgebnis></td>
+        <td><SpielerSelect :team="home" :position="spiel.home" :index="index" :showspielerpass="showspielerpass"></SpielerSelect></td>
+        <td><SpielerSelect :team="away" :position="spiel.away" :index="index" :showspielerpass="showspielerpass"></SpielerSelect></td>
+        <td class="narrow centered"><SpielerScore :team="home" :index="index"></SpielerScore></td>
+        <td class="narrow centered"><SpielerScore :team="away" :index="index"></SpielerScore></td>
+        <td class="narrow centered"><SpielErgebnis class="spiel" :index="index"></SpielErgebnis></td>
         <td class="narrow centered">
             <span v-if="spiel.scores.home != null && spiel.scores.away != null">
                 <SpielStand class="gesamt" :index="index" :spielplan="spielplan"></SpielStand>
@@ -45,21 +45,20 @@ export default {
         SpielStand
     },
     props: {
-        home: {
-            type: Object,
-            required: true
-        },
-        away: {
-            type: Object,
-            required: true
-        },
-        spielplan: {
-            type: Array,
-            required: true
-        },
         showspielerpass: {
             type: Boolean,
             default: false
+        }
+    },
+    computed: {
+        home() {
+            return this.$store.state.home
+        },
+        away() {
+            return this.$store.state.away
+        },
+        spielplan() {
+            return this.$store.state.spielplan
         }
     },
     methods: {

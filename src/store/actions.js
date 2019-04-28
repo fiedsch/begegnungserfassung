@@ -28,5 +28,18 @@ export default {
     },
     initializeData(context) {
         context.commit('initializeData')
+    },
+
+    lineupPlayerChanged(context, data) {
+        context.commit('lineupPlayerChanged', data)
+    },
+    resultsTablePlayerChanged(context, data) {
+        context.commit('resultsTablePlayerChanged', data)
+    },
+    setHighlight(context, data) {
+        context.commit('setHighlight', data)
+    },
+    setHighlightsData(context, data) {
+        context.commit('setHighlightsData', data)
     }
 }

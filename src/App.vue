@@ -3,45 +3,30 @@
         <div v-if="isBackendView" id="tl_buttons">
             <a href="contao?do=liga.begegnungserfassung" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
         </div>
-        <Aufstellung
-                :home="home"
-                :away="away"
-                :slots="numSlots"
-                :showspielerpass="showspielerpass"
-        ></Aufstellung>
-        <form method="POST" id="vue_begegnungserfassung" class="tl_form tl_edit_form" enctype="application/x-www-form-urlencoded">
+        <Aufstellung :showspielerpass="showspielerpass"></Aufstellung>
+        <div class="showspielerpasscheckbox">
+            <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
+            <label for="showspielerpass">Spielerpass-Nummern anzeigen</label>
+        </div>
+        <form method="POST" id="vue_begegnungserfassung" class="tl_form tl_edit_form" enctype="application/x-www-form-urlencoded"><!-- multipart/form-data -->
             <div class="tl_formbody_edit">
                 <input type="hidden" name="REQUEST_TOKEN" :value="requestToken">
                 <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung">
-                <input type="hidden" name="id" :value="begegnungId">
-                <!-- sind auch in json_data enthalten => sollten entfallen können -->
-                <!-- <input type="hidden" name="homelineup" :value="home.lineup"> -->
-                <!-- <input type="hidden" name="awaylineup" :value="away.lineup"> -->
+                <!-- Auch json_data sollten wir nicht brauchen, ABER: siehe dataToSubmit() -->
                 <input type="hidden" name="json_data" :value="dataToSubmit">
-                <input type="hidden" name="spielplan_code" :value="spielplan_code">
-                <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
-                <label for="showspielerpass">Spielerpass-Nummern anzeigen</label>
-                <ResultsTable
-                  :home="home"
-                  :away="away"
-                  :spielplan="spielplan"
-                  :showspielerpass="showspielerpass"
-                ></ResultsTable>
-                <HighlightsEntry :available="availableAll" :showspielerpass="showspielerpass"></HighlightsEntry>
-            </div>
-            <div class="tl_formbody_submit">
-                <div class="tl_submit_container">
-                    <button type="submit" name="save" id="save" class="btn btn-primary tl_submit" accesskey="s" @click.prevent="saveFormData">Speichern</button>
-                </div>
             </div>
         </form>
+        <ResultsTable :showspielerpass="showspielerpass"></ResultsTable>
+        <HighlightsEntry :showspielerpass="showspielerpass"></HighlightsEntry>
+        <div class="tl_formbody_submit">
+            <div class="tl_submit_container">
+                <button type="submit" name="save" id="save" class="btn btn-primary tl_submit" accesskey="s" @click.prevent="saveFormData">Speichern</button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-/**
- *
- */
 
 import Aufstellung from './components/Aufstellung.vue'
 import ResultsTable from './components/ResultsTable.vue'
@@ -63,21 +48,6 @@ export default {
         isBackendView() {
             return this.$store.state.isBackendView
         },
-
-        // Für <Aufstellung>, das sich diese Daten aber letztlich aus dem Store selbst holt
-        // und für die <ResultsTable>
-        home() {
-            return this.$store.state.home
-        },
-        away() {
-            return this.$store.state.away
-        },
-        slots() {
-            return this.$store.state.slots
-        },
-        numSlots() {
-            return this.$store.state.numSlots
-        },
         // Für das <form>
         requestToken() {
             return this.$store.state.requestToken
@@ -85,34 +55,26 @@ export default {
         begegnungId() {
             return this.$store.state.begegnungId
         },
-        spielplan() {
-            return this.$store.state.spielplan
-        },
-        spielplan_code() {
-            return this.$store.state.spielplan_code
-        },
-        // legacy
-        availableAll() {
-            return this.$store.getters.availableAll
-        },
-
         dataToSubmit() {
-            // TODO: aus Store
             return JSON.stringify({
-                spielplan: this.spielplan,
-                home: this.home,
-                away: this.away,
-                highlights: {
-                    home: { }, // TODO: mit Daten füllen
-                    away: { }
-                }
+                spielplan: this.$store.state.spielplan,
+                spielplan_code: this.$store.state.spielplan_code,
+                home: this.$store.state.home,
+                away: this.$store.state.away,
+                highlights: this.$store.state.highlights,
+                begegnungId: this.$store.state.begegnungId
             })
         }
     },
     methods: {
         saveFormData() {
-            let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
             // URL aus der Contao-Installation mit installiertem ligaverwaltung-bundle
+            let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
+            // vs.
+            // let formData = this.dataToSubmit
+            // was dann aber ohne REQUEST_TOKEN wäre. Und auch, wenn wir dieses in
+            //dataToSubmit einbauen mault Contao
+
             let url = '/ligaverwaltung/erfassen/'+this.begegnungId;
             this.$http.post(url, formData).then(
                 (result) => {
@@ -136,6 +98,7 @@ export default {
             this.$store.dispatch("initializeData")
             this.$store.dispatch("setSpielplanCode", data.spielplan_code)
             this.$store.dispatch("setIsBackendView", undefined !== data.isBackendView ? data.isBackendView : false)
+            this.$store.dispatch("setHighlightsData", undefined !== data.highlights ? data.highlights : {})
         }
     }
 }
@@ -144,5 +107,11 @@ export default {
 <style>
 .tl_formbody_edit {
     padding: 1rem;
+}
+.showspielerpasscheckbox {
+    margin-top: 1em;
+}
+.showspielerpasscheckbox label {
+    margin-left: .5em;
 }
 </style>

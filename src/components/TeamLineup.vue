@@ -59,10 +59,7 @@ export default {
     },
     methods: {
         lineupplayerchanged(slotnumber, selected) {
-            this.lineup[slotnumber-1] = selected;
-            // make change "visible" (this is most likely not the proper way)
-            // FIXME: use set()
-            this.lineup.push(this.lineup.pop());
+            this.$store.dispatch('lineupPlayerChanged', { suffix: this.suffix, slotnumber:slotnumber, selected: selected })
         }
     }
 }
