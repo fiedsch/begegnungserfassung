@@ -62,7 +62,9 @@ export default {
                 home: this.$store.state.home,
                 away: this.$store.state.away,
                 highlights: this.$store.state.highlights,
-                begegnungId: this.$store.state.begegnungId
+                begegnungId: this.$store.state.begegnungId,
+                REQUEST_TOKEN: this.$store.state.requestToken,
+                FORM_SUBMIT: 'begegnungserfassung'
             })
         }
     },
@@ -72,8 +74,8 @@ export default {
             let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
             // vs.
             // let formData = this.dataToSubmit
-            // was dann aber ohne REQUEST_TOKEN wäre. Und auch, wenn wir dieses in
-            //dataToSubmit einbauen mault Contao
+            // ... was dann (aus Contaos Sicht?) aber ohne REQUEST_TOKEN ist.
+            // Auch wenn wir dieses in dataToSubmit einbauen "mault" Contao!
 
             let url = '/ligaverwaltung/erfassen/'+this.begegnungId;
             this.$http.post(url, formData).then(
