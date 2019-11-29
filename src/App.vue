@@ -16,7 +16,7 @@ export default {
     },
     data() {
         return {
-            /** eslint no-undef */
+            // eslint-disable-next-line
             data: data // aus globaler Variable
         }
     }
