@@ -1,5 +1,5 @@
 <template>
-    <div class="highlights" v-if="sortedAvailableAll.length>0">
+    <div class="highlights" v-if="sortedPlayedAll.length>0">
         <h2>Highlights</h2>
         <table>
             <thead>
@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(player, i) in sortedAvailableAll" :key="'pr_'+i">
+                <tr v-for="(player, i) in sortedPlayedAll" :key="'pr_'+i">
                     <td>
                         ({{ player.abbrev }}) {{ player.name }}
                         <span v-show="showspielerpass">({{ player.pass }})</span>
@@ -50,8 +50,8 @@ export default {
         }
     },
     computed: {
-        sortedAvailableAll() {
-            let tmp = this.$store.getters.availableAll.slice(0) // do not change this.available by sorting it (work on a clone)
+        sortedPlayedAll() {
+            let tmp = this.$store.getters.playedAll.slice(0) // do not change this.available by sorting it (work on a clone)
             return tmp.sort(function(a,b) {
                 if (a.abbrev.match(/^H/) && b.abbrev.match(/^G/)) { return -1 }
                 if (a.abbrev.match(/^G/) && b.abbrev.match(/^H/)) { return +1 }
