@@ -1,6 +1,7 @@
 <template>
     <tbody>
     <tr
+        :class="{'double':spiel.home.length>1, 'single':spiel.home.length==1 }"
         v-for="(spiel, index) in spielplan"
         :key="'row_'+index"
     >
@@ -59,10 +60,12 @@ export default {
         },
         spielplan() {
             return this.$store.state.spielplan
-        }
+        },
     },
     methods: {
-        getResult(index, i) { return index+i; }
+        getResult(index, i) {
+            return index+i;
+        }
     }
 }
 </script>
