@@ -14,6 +14,11 @@
     </strong>
 </noscript>
 
+<!--
+Bessere (?) Alternative zur globalen Variablen:
+<script id="data" type="application/json">{"some": "data here"}</script>
+<script>var data = JSON.parse(document.getElementById('data').innerHTML);</script>
+-->
 <script>
     // wird aus JS-Datei eingelesen (ist mit -- falls vorhanden -- bereits bekanten Ergebnissen anzureichern)
     var spielplan = [
@@ -81,6 +86,7 @@
         spielplan: spielplan,
         spielplan_code: spielplan_code,
         numSlots: 8,
+        webserviceUrl: '/ligaverwaltung/begegnung',
         requestToken: 'xxx',
         begegnungId: 1234,
         isBackendView: false,

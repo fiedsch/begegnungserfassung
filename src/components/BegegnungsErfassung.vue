@@ -1,8 +1,5 @@
 <template ref="app">
     <div>
-        <div v-if="isBackendView" id="tl_buttons">
-            <a href="contao?do=liga.begegnungserfassung" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
-        </div>
         <Aufstellung :showspielerpass="showspielerpass"></Aufstellung>
         <div class="showspielerpasscheckbox">
             <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
@@ -12,7 +9,6 @@
             <div class="tl_formbody_edit">
                 <input type="hidden" name="REQUEST_TOKEN" :value="requestToken">
                 <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung">
-                <!-- Auch json_data sollten wir nicht brauchen, ABER: siehe dataToSubmit() -->
                 <input type="hidden" name="json_data" :value="dataToSubmit">
             </div>
         </form>
@@ -21,6 +17,10 @@
         <div class="tl_formbody_submit">
             <div class="tl_submit_container">
                 <button type="submit" name="save" id="save" class="btn btn-primary tl_submit" accesskey="s" @click.prevent="saveFormData">Speichern</button>
+                <!--
+                &nbsp;
+                <button type="submit" name="saveandclose" id="saveandclose" class="btn btn-primary tl_submit" accesskey="c" @click.prevent="saveFormDataAndClose">Speichern und schließen</button>
+                -->
             </div>
         </div>
     </div>
@@ -51,9 +51,6 @@ export default {
         }
     },
     computed: {
-        isBackendView() {
-            return this.$store.state.isBackendView
-        },
         // Für das <form>
         requestToken() {
             return this.$store.state.requestToken
@@ -76,27 +73,17 @@ export default {
     },
     methods: {
         saveFormData() {
-            // URL aus der Contao-Installation mit installiertem ligaverwaltung-bundle
             let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
             // vs.
             // let formData = this.dataToSubmit
             // ... was dann (aus Contaos Sicht?) aber ohne REQUEST_TOKEN ist.
             // Auch wenn wir dieses in dataToSubmit einbauen "mault" Contao!
 
-            console.log(formData.get('json_data')); alert('FAKE: habe Daten gepostet (siehe console)'); return;
-
-            let url = '/ligaverwaltung/erfassen/'+this.begegnungId;
-            this.$http.post(url, formData).then(
-                (result) => {
-                    alert(JSON.stringify(result.data, ' ', 2))
-                    // TODO: anstelle des alert()s ein visuelles Feedback für
-                    // den User, daß das Speichern seiner Daten erfolgreich war.
-                }
-            ).catch(
-                (error) => {
-                    alert(error)
-                }
-            )
+            this.$store.dispatch('saveData', formData)
+        },
+        saveFormDataAndClose() {
+            let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
+            this.$store.dispatch('saveDataAndClose', formData)
         },
         setData(data) {
             this.$store.dispatch("setNumSlots", data.numSlots)
@@ -107,8 +94,8 @@ export default {
             this.$store.dispatch("setBegegnungId", undefined !== data.begegnungId ? data.begegnungId : 0)
             this.$store.dispatch("initializeData")
             this.$store.dispatch("setSpielplanCode", data.spielplan_code)
-            this.$store.dispatch("setIsBackendView", undefined !== data.isBackendView ? data.isBackendView : false)
             this.$store.dispatch("setHighlightsData", undefined !== data.highlights ? data.highlights : {})
+            this.$store.dispatch("setWebserviceUrl", undefined !== data.webserviceUrl ? data.webserviceUrl : '')
         }
     },
     mounted() {
@@ -118,6 +105,9 @@ export default {
 </script>
 
 <style>
+.tl_formbody_submit {
+    margin-top: 2rem;
+}
 .tl_formbody_edit {
     padding: 1rem;
 }

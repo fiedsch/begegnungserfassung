@@ -26,9 +26,6 @@ export default {
     setBegegnungId(state, data) {
         state.begegnungId = data
     },
-    setIsBackendView(state, data) {
-        state.isBackendView = data
-    },
     initializeData(state) {
         if (state.home.lineup.length === 0) {
             state.home.lineup = makeLineuparray(state.numSlots)
@@ -75,9 +72,12 @@ export default {
     },
     setHighlight(state, data) {
         Vue.set(state.highlights, data.key, data.value)
-
     },
     setHighlightsData(state, data) {
         Vue.set(state, 'highlights', data)
+    },
+    setWebserviceUrl(state, data) {
+        if (!data.match(/\/$/)) { data += '/' }
+        Vue.set(state, 'webserviceUrl', data)
     }
 }

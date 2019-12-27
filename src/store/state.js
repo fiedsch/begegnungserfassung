@@ -7,5 +7,5 @@ export default {
     numSlots: 0,
     requestToken: '',
     begegnungId: '',
-    isBackendView: false
+    webserviceUrl: ''
 }
