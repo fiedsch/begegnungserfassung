@@ -61,12 +61,9 @@ export default {
     },
     resultsTablePlayerChanged(state, data) {
         // data ... { key: this.team.key, index: this.index, position: 0, value: value }
-        console.log("resultsTablePlayerChanged: "+JSON.stringify(data))
         if (data.key === 'home') {
-            //state.home.played[data.index].ids[data.position] = value;
             Vue.set(state.home.played[data.index].ids, data.position, data.value)
         } else {
-            // state.away.played[data.index].ids[data.position] = value;
             Vue.set(state.away.played[data.index].ids, data.position, data.value)
         }
     },

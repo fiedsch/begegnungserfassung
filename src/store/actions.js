@@ -49,11 +49,6 @@ export default {
     },
     saveData(context, data) {
         let url = context.state.webserviceUrl+context.state.begegnungId;
-        for (var pair of data.entries()) { console.log("%s %o", pair[0], pair[1]); }
-        console.log("%o", data.entries())
-        /*eslint no-unreachable: "off"*/
-        // return
-
         Vue.http.post(url, data)
             .then(
                 (result) => {
