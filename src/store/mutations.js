@@ -63,8 +63,10 @@ export default {
         // data ... { key: this.team.key, index: this.index, position: 0, value: value }
         if (data.key === 'home') {
             Vue.set(state.home.played[data.index].ids, data.position, data.value)
+            Vue.set(state.spielplan[data.index].home, data.position, data.value)
         } else {
             Vue.set(state.away.played[data.index].ids, data.position, data.value)
+            Vue.set(state.spielplan[data.index].away, data.position, data.value)
         }
     },
     setHighlight(state, data) {
