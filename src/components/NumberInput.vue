@@ -34,6 +34,15 @@ export default {
         update(event) {
             this.$store.dispatch('setHighlight', { key: event.target.name, value: event.target.value })
         }
+    },
+    watch: {
+        inputname(newName, oldName) {
+            this.$store.dispatch('setHighlight', { key: newName, value: this.$store.state.highlights[oldName] })
+            this.$store.dispatch('setHighlight', { key: oldName, value: '' })
+        }
+    },
+    beforeDestroy() {
+        this.$store.dispatch('setHighlight', { key: this.inputname, value: '' })
     }
 }
 </script>
