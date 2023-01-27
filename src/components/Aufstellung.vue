@@ -31,7 +31,7 @@
 import TeamLineup from './TeamLineup.vue'
 
 export default {
-    name: 'Aufstellung',
+    name: 'Aufstellung', // eslint-disable-line vue/multi-word-component-names
     components: {
         TeamLineup
     },
