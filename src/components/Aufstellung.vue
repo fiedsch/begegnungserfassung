@@ -8,6 +8,7 @@
                     :lineup="home.lineup"
                     :slots="slots"
                     :showspielerpass="showspielerpass"
+                    :disabled="disabled"
             ></TeamLineup>
         </div>
         <div class="team-lineup">
@@ -18,6 +19,7 @@
                     :lineup="away.lineup"
                     :slots="slots"
                     :showspielerpass="showspielerpass"
+                    :disabled="disabled"
             ></TeamLineup>
         </div>
     </div>
@@ -37,6 +39,10 @@ export default {
     },
     props: {
         showspielerpass: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

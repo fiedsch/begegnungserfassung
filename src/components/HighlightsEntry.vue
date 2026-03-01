@@ -18,10 +18,10 @@
                         <span v-show="showspielerpass">({{ player.pass }})</span>
                     </td>
 
-                    <td><NumberInput :inputname="'one80_'+player.id" :placeholder="'180er'"></NumberInput></td>
-                    <td><NumberInput :inputname="'one71_'+player.id" :placeholder="'171er'"></NumberInput></td>
-                    <td><NumberListInput :inputname="'highfinish_'+player.id" :placeholder="'Highfinishes'"></NumberListInput></td>
-                    <td><NumberListInput :inputname="'shortleg_'+player.id" :placeholder="'Shortlegs'"></NumberListInput></td>
+                    <td><NumberInput :inputname="'one80_'+player.id" :placeholder="'180er'"  :disabled="disabled"></NumberInput></td>
+                    <td><NumberInput :inputname="'one71_'+player.id" :placeholder="'171er'" :disabled="disabled"></NumberInput></td>
+                    <td><NumberListInput :inputname="'highfinish_'+player.id" :placeholder="'Highfinishes'" :disabled="disabled"></NumberListInput></td>
+                    <td><NumberListInput :inputname="'shortleg_'+player.id" :placeholder="'Shortlegs'" :disabled="disabled"></NumberListInput></td>
                 </tr>
             </tbody>
         </table>
@@ -45,6 +45,10 @@ export default {
     props: {
         // Verfügbare Spieler: Array von Objekten, jeweils ID und Name der verfügbaren Spieler
         showspielerpass: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

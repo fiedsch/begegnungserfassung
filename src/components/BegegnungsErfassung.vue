@@ -1,22 +1,22 @@
 <template ref="app">
-    <div>
-        <Aufstellung :showspielerpass="showspielerpass"></Aufstellung>
+    <div class="vue_app_wrapper" data-turbo="false">
+        <Aufstellung :showspielerpass="showspielerpass" :disabled="disabled"></Aufstellung>
         <div class="showspielerpasscheckbox">
             <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
             <label for="showspielerpass">Spielerpass-Nummern anzeigen</label>
         </div>
         <form method="POST" id="vue_begegnungserfassung" class="tl_form tl_edit_form" enctype="application/x-www-form-urlencoded"><!-- multipart/form-data -->
             <div class="tl_formbody_edit">
-                <input type="hidden" name="REQUEST_TOKEN" :value="requestToken">
-                <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung">
-                <input type="hidden" name="json_data" :value="dataToSubmit">
+                <input type="hidden" name="REQUEST_TOKEN" :value="requestToken" :disabled="disabled">
+                <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung" :disabled="disabled">
+                <input type="hidden" name="json_data" :value="dataToSubmit" :disabled="disabled">
             </div>
         </form>
-        <ResultsTable :showspielerpass="showspielerpass"></ResultsTable>
-        <HighlightsEntry :showspielerpass="showspielerpass"></HighlightsEntry>
-        <div class="tl_formbody_submit">
+        <ResultsTable :showspielerpass="showspielerpass" :disabled="disabled"></ResultsTable>
+        <HighlightsEntry :showspielerpass="showspielerpass" :disabled="disabled"></HighlightsEntry>
+        <div class="tl_formbody_submit vue_app">
             <div class="tl_submit_container">
-                <button type="submit" name="save" id="save" class="btn btn-primary tl_submit" accesskey="s" @click.prevent="saveFormData">Speichern</button>
+                <button type="submit" name="save" id="save" class="btn btn-primary tl_submit" accesskey="s" @click.prevent="saveFormData" :disabled="disabled">Speichern</button>
                 <!--
                 &nbsp;
                 <button type="submit" name="saveandclose" id="saveandclose" class="btn btn-primary tl_submit" accesskey="c" @click.prevent="saveFormDataAndClose">Speichern und schließen</button>
@@ -47,7 +47,7 @@ export default {
     },
     data() {
         return {
-            showspielerpass: false
+            showspielerpass: false,
         }
     },
     computed: {
@@ -69,6 +69,9 @@ export default {
                 REQUEST_TOKEN: this.$store.state.requestToken,
                 FORM_SUBMIT: 'begegnungserfassung'
             })
+        },
+        disabled() {
+            return this.$store.state.disabled
         }
     },
     methods: {
@@ -86,6 +89,7 @@ export default {
             this.$store.dispatch('saveDataAndClose', formData)
         },
         setData(data) {
+            this.$store.dispatch("setDisabledStatus", data.disabled)
             this.$store.dispatch("setNumSlots", data.numSlots)
             this.$store.dispatch("setSpielplan", data.spielplan)
             this.$store.dispatch("setHome", data.home)

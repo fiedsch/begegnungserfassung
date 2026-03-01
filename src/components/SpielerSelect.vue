@@ -4,7 +4,9 @@
             class="tl_select unsetwidth"
             title="SpielerSelect"
             v-model="selected"  v-bind:class="{ double: isDouble, winner: isWinner, loser: isLoser }"
-            :name="selectname" tabindex="-1">
+            :name="selectname" tabindex="-1"
+            :disabled="disabled"
+        >
             <option
                 v-for="lineupindex in team.lineup.length"
                 :key="'pl1_'+(lineupindex-1)"
@@ -16,7 +18,9 @@
             title="SpleierSelect2"
             v-if="isDouble"
             v-model="selected2" v-bind:class="{ double: isDouble, winner: isWinner, loser: isLoser }"
-            :name="selectname2" tabindex="-1">
+            :name="selectname2" tabindex="-1"
+            :disabled="disabled"
+        >
             <option
                 v-for="lineupindex in team.lineup.length"
                 :key="'pl2_'+(lineupindex-1)"
@@ -47,6 +51,10 @@ export default {
             type: Number
         },
         showspielerpass: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

@@ -22,6 +22,9 @@ export default {
     setNumSlots(context, data) {
         context.commit('setNumSlots', data)
     },
+    setDisabledStatus(context, data) {
+        context.commit('setDisabledStatus', data)
+    },
     setRequestToken(context, data) {
         context.commit('setRequestToken', data)
     },

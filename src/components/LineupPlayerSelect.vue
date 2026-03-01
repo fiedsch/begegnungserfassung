@@ -1,7 +1,7 @@
 <template>
     <div class="linup-player">
         <span class="slot">{{ suffix }}{{ slotNumber }}</span>
-        <select v-model="selected" :name="selectname" class="tl_select unsetwidth">
+        <select v-model="selected" :name="selectname" class="tl_select unsetwidth" :disabled="disabled">
             <option
                 v-for="a in available" :value="a.id"
                 :key="'player_'+a.id"
@@ -13,8 +13,7 @@
     </div>
 </template>
 
-<script>
-/**
+<script>/**
  * Auswahl eines Spielers in der Aufstellung
  */
 
@@ -40,6 +39,10 @@ export default {
             required: true
         },
         showspielerpass: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

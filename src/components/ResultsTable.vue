@@ -2,7 +2,7 @@
     <div class="results-table">
         <table>
             <TableHeader></TableHeader>
-            <TableBody :showspielerpass="showspielerpass"></TableBody>
+            <TableBody :showspielerpass="showspielerpass" :disabled="disabled"></TableBody>
         </table>
     </div>
 </template>
@@ -22,6 +22,10 @@ export default {
     },
     props: {
         showspielerpass: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }

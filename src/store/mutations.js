@@ -26,6 +26,9 @@ export default {
     setBegegnungId(state, data) {
         state.begegnungId = data
     },
+    setDisabledStatus(state, data) {
+        state.disabled = data
+    },
     initializeData(state) {
         if (state.home.lineup.length === 0) {
             state.home.lineup = makeLineuparray(state.numSlots)

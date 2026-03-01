@@ -9,6 +9,7 @@
                     :lineup="lineup"
                     @lineupplayerchanged="lineupplayerchanged"
                     :showspielerpass="showspielerpass"
+                    :disabled="disabled"
             ></LineupPlayerSelect>
         </div>
     </div>
@@ -55,6 +56,10 @@ export default {
         showspielerpass: {
             type: Boolean,
             default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
         }
     },
     methods: {
