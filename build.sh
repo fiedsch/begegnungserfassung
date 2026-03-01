@@ -16,9 +16,9 @@ do
 done
 
 npm run build && \
-  cp dist/css/app.css ${TARGET_DIR}/css && \
-  cp dist/js/app.js ${TARGET_DIR}/js  && \
-  cp dist/js/chunk-vendors.js ${TARGET_DIR}/js
+  cp dist/css/app.*.css ${TARGET_DIR}/css && \
+  cp dist/js/app.*.js ${TARGET_DIR}/js  && \
+  cp dist/js/chunk-vendors.*.js ${TARGET_DIR}/js
 
 cd $CONTAO_DIR
 ./manage.sh
