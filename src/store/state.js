@@ -6,7 +6,6 @@ export default {
     spielplan_code: '',
     numSlots: 0,
     disabled: false,
-    requestToken: '',
     begegnungId: '',
     webserviceUrl: ''
 }

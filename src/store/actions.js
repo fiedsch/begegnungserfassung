@@ -25,9 +25,6 @@ export default {
     setDisabledStatus(context, data) {
         context.commit('setDisabledStatus', data)
     },
-    setRequestToken(context, data) {
-        context.commit('setRequestToken', data)
-    },
     setBegegnungId(context, data) {
         context.commit('setBegegnungId', data)
     },
@@ -49,23 +46,5 @@ export default {
     },
     setWebserviceUrl(context, data) {
         context.commit('setWebserviceUrl', data)
-    },
-    saveData(context, data) {
-        let url = context.state.webserviceUrl+context.state.begegnungId;
-        Vue.http.post(url, data)
-            .then(
-                (result) => {
-                    alert(result.data)
-                }
-            )
-            .catch(
-                (error) => {
-                    alert(error.url+' : '+error.statusText) // JSON.stringify(error)
-                }
-            )
-    },
-    saveDataAndClose(context, data) {
-        alert('save and close ist noch TODO')
-        context.dispatch('saveData', data)
     }
 }

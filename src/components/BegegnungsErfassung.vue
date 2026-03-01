@@ -5,25 +5,8 @@
             <input type="checkbox" id="showspielerpass" v-model="showspielerpass">
             <label for="showspielerpass">Spielerpass-Nummern anzeigen</label>
         </div>
-        <form method="POST" id="vue_begegnungserfassung" class="tl_form tl_edit_form" enctype="application/x-www-form-urlencoded"><!-- multipart/form-data -->
-            <div class="tl_formbody_edit">
-                <input type="hidden" name="REQUEST_TOKEN" :value="requestToken" :disabled="disabled">
-                <input type="hidden" name="FORM_SUBMIT" value="begegnungserfassung" :disabled="disabled">
-                <input type="hidden" name="json_data" :value="dataToSubmit" :disabled="disabled">
-            </div>
-        </form>
         <ResultsTable :showspielerpass="showspielerpass" :disabled="disabled"></ResultsTable>
         <HighlightsEntry :showspielerpass="showspielerpass" :disabled="disabled"></HighlightsEntry>
-        <div class="tl_formbody_submit vue_app">
-            <div class="tl_submit_container">
-                <button type="submit" name="save" id="save" class="btn btn-primary tl_submit" accesskey="s" @click.prevent="saveFormData" :disabled="disabled">Speichern</button>
-                <!--
-                &nbsp;
-                <button type="submit" name="saveandclose" id="saveandclose" class="btn btn-primary tl_submit" accesskey="c" @click.prevent="saveFormDataAndClose">Speichern und schließen</button>
-                -->
-            </div>
-        </div>
-
         <div class="widget" data-turbo="false">
             <input type="hidden" name="vue_app" id="ctrl_vue_app" class="tl_text tl_custom_widget" data-turbo="false" v-model="dataToSubmit">
         </div>
@@ -56,10 +39,6 @@ export default {
         }
     },
     computed: {
-        // Für das <form>
-        requestToken() {
-            return this.$store.state.requestToken
-        },
         begegnungId() {
             return this.$store.state.begegnungId
         },
@@ -71,8 +50,6 @@ export default {
                 away: this.$store.state.away,
                 highlights: this.$store.state.highlights,
                 begegnungId: this.$store.state.begegnungId,
-                REQUEST_TOKEN: this.$store.state.requestToken,
-                FORM_SUBMIT: 'begegnungserfassung'
             })
         },
         disabled() {
@@ -80,26 +57,12 @@ export default {
         }
     },
     methods: {
-        saveFormData() {
-            let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
-            // vs.
-            // let formData = this.dataToSubmit
-            // ... was dann (aus Contaos Sicht?) aber ohne REQUEST_TOKEN ist.
-            // Auch wenn wir dieses in dataToSubmit einbauen "mault" Contao!
-
-            this.$store.dispatch('saveData', formData)
-        },
-        saveFormDataAndClose() {
-            let formData = new FormData(document.querySelector('#vue_begegnungserfassung'));
-            this.$store.dispatch('saveDataAndClose', formData)
-        },
         setData(data) {
             this.$store.dispatch("setDisabledStatus", data.disabled)
             this.$store.dispatch("setNumSlots", data.numSlots)
             this.$store.dispatch("setSpielplan", data.spielplan)
             this.$store.dispatch("setHome", data.home)
             this.$store.dispatch("setAway", data.away)
-            this.$store.dispatch("setRequestToken", undefined !== data.requestToken ? data.requestToken : '')
             this.$store.dispatch("setBegegnungId", undefined !== data.begegnungId ? data.begegnungId : 0)
             this.$store.dispatch("initializeData")
             this.$store.dispatch("setSpielplanCode", data.spielplan_code)
@@ -114,12 +77,6 @@ export default {
 </script>
 
 <style>
-.tl_formbody_submit {
-    margin-top: 2rem;
-}
-.tl_formbody_edit {
-    padding: 1rem;
-}
 .showspielerpasscheckbox {
     margin-top: 1em;
 }

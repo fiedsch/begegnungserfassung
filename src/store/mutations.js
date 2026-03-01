@@ -20,9 +20,6 @@ export default {
     setNumSlots(state, data) {
         state.numSlots = data
     },
-    setRequestToken(state, data) {
-        state.requestToken = data
-    },
     setBegegnungId(state, data) {
         state.begegnungId = data
     },
