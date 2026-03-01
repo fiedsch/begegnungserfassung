@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 # Zielverzeichnis (Entwicklungsumgebung Contao Bundle)
-TARGET_DIR=/Users/andreas/Project/edart-bayern.de/contao-ligaverwaltung-bundle/src/Resources/public
+TARGET_DIR=/Users/andreas/Project/edart-bayern.de/contao-ligaverwaltung-bundle/public
+
+#CONTAO_DIR=/Users/andreas/Sites/edart-bayern.de
+CONTAO_DIR=/Users/andreas/Sites/contao-5
 
 for type in js css
 do 
@@ -17,6 +20,6 @@ npm run build && \
   cp dist/js/app.js ${TARGET_DIR}/js  && \
   cp dist/js/chunk-vendors.js ${TARGET_DIR}/js
 
-cd /Users/andreas/Sites/edart-bayern.de/
+cd $CONTAO_DIR
 ./manage.sh
 cd -
