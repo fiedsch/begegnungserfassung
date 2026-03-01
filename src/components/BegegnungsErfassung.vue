@@ -23,6 +23,11 @@
                 -->
             </div>
         </div>
+
+        <div class="widget" data-turbo="false">
+            <input type="hidden" name="vue_app" id="ctrl_vue_app" class="tl_text tl_custom_widget" data-turbo="false" v-model="dataToSubmit">
+        </div>
+
     </div>
 </template>
 
