@@ -6,6 +6,7 @@
             min="0" max="3"
             autocomplete="off"
             title="Spieler Score"
+            @keyup="focusNextInput"
     >
 </template>
 
@@ -24,6 +25,18 @@
         index: {
             type: Number,
             required: true
+        }
+    },
+    methods: {
+        // when entering a digit (we assume scores to be <= 3 -- see the template where we have max="3") jump to the next input field
+        focusNextInput(e) {
+            if (e.code.match(/^Digit/)) {
+                const inputs = Array.from(document.querySelectorAll('input[class*="spieler-score"]'))
+                const index = inputs.indexOf(e.target);
+                if (index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            }
         }
     },
     computed: {
