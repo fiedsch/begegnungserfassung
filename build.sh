@@ -16,7 +16,9 @@ do
 done
 
 npm run build && \
+  rm ${TARGET_DIR}/css/* && \
   cp dist/css/app.*.css ${TARGET_DIR}/css && \
+  rm ${TARGET_DIR}/js/*  && \
   cp dist/js/app.*.js ${TARGET_DIR}/js  && \
   cp dist/js/chunk-vendors.*.js ${TARGET_DIR}/js
 
