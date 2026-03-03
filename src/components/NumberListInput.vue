@@ -27,7 +27,8 @@ export default {
             return this.$store.state.highlights[this.inputname]
         },
         isValid() {
-            return undefined === this.val || String(this.val).match(/^(\d+,{0,1})*$/)
+            let value = this.$store.state.highlights[this.inputname]
+            return undefined === value || String(value).match(/^(\d+,{0,1}\s*)*$/)
         }
     },
     methods: {
