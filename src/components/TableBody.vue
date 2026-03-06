@@ -8,8 +8,8 @@
         <td><span class="slot">{{ index+1 }}</span></td>
         <td><SpielerSelect :team="home" :position="spiel.home" :index="index" :showspielerpass="showspielerpass" :disabled="disabled"></SpielerSelect></td>
         <td><SpielerSelect :team="away" :position="spiel.away" :index="index" :showspielerpass="showspielerpass" :disabled="disabled"></SpielerSelect></td>
-        <td class="narrow centered"><SpielerScore :team="home" :index="index" :disabled="disabled"></SpielerScore></td>
-        <td class="narrow centered"><SpielerScore :team="away" :index="index" :disabled="disabled"></SpielerScore></td>
+        <td class="narrow centered"><SpielerScore :team="home" :index="index" :disabled="disabled" :automove="automove"></SpielerScore></td>
+        <td class="narrow centered"><SpielerScore :team="away" :index="index" :disabled="disabled" :automove="automove"></SpielerScore></td>
         <td class="narrow centered"><SpielErgebnis class="spiel" :index="index"></SpielErgebnis></td>
         <td class="narrow centered">
             <span v-if="spiel.scores.home != null && spiel.scores.away != null">
@@ -47,6 +47,10 @@ export default {
     },
     props: {
         showspielerpass: {
+            type: Boolean,
+            default: false
+        },
+        automove: {
             type: Boolean,
             default: false
         },

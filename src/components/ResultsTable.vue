@@ -1,8 +1,12 @@
 <template>
     <div class="results-table">
+        <div>
+            <input type="checkbox" id="automove" v-model="automove">
+            <label for="automove">Bei der Eingabe automatisch in das nächste Feld springen</label>
+        </div>
         <table>
             <TableHeader></TableHeader>
-            <TableBody :showspielerpass="showspielerpass" :disabled="disabled"></TableBody>
+            <TableBody :showspielerpass="showspielerpass" :automove="automove" :disabled="disabled"></TableBody>
         </table>
     </div>
 </template>
@@ -19,6 +23,11 @@ export default {
     components: {
         TableHeader,
         TableBody
+    },
+    data() {
+        return {
+            automove: false, // automatically move to the next field once a value has been entered (mobile devices don't have a tab key)
+        }
     },
     props: {
         showspielerpass: {

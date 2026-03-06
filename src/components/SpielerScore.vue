@@ -25,11 +25,16 @@
         index: {
             type: Number,
             required: true
+        },
+        automove: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {
         // when entering a digit (we assume scores to be <= 3 -- see the template where we have max="3") jump to the next input field
         focusNextInput(e) {
+            if (!this.automove) { return }
             if (e.code.match(/^Digit/)) {
                 const inputs = Array.from(document.querySelectorAll('input[class*="spieler-score"]'))
                 const index = inputs.indexOf(e.target);
