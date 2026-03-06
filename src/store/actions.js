@@ -4,9 +4,6 @@ Vue.use(VueResource)
 // Vue.http.options.emulateJSON = true
 
 export default {
-    setData(context, data) {
-        context.commit('setData', data)
-    },
     setHome(context, data) {
         context.commit('setHome', data)
     },
@@ -31,7 +28,6 @@ export default {
     initializeData(context) {
         context.commit('initializeData')
     },
-
     lineupPlayerChanged(context, data) {
         context.commit('lineupPlayerChanged', data)
     },
