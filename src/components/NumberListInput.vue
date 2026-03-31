@@ -6,6 +6,8 @@
             autocomplete="off"
             @change="update"
             :value="value"
+            @focus="onFocus"
+            @blur="onBlur"
     >
 </template>
 
@@ -34,6 +36,16 @@ export default {
     methods: {
         update(event) {
             this.$store.dispatch('setHighlight', { key: event.target.name, value: event.target.value })
+        },
+        onFocus(e) {
+            let id = e.target.name.replace(/^(.+_)/, '')
+            //console.log('focus NumberInput '+e.target.name)
+            this.$emit('focus', id)
+        },
+        onBlur(e) {
+            let id = e.target.name.replace(/^(.+_)/, '')
+            //console.log('blur NumberInput '+e.target.name)
+            this.$emit('blur', id)
         }
     },
     watch: {

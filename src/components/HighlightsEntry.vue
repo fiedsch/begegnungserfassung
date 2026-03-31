@@ -13,16 +13,14 @@
             </thead>
             <tbody>
                 <tr v-for="(player, i) in sortedPlayedAll" :key="'pr_'+i">
-                    <td>
                     <td v-bind:class="{'label': true, 'active': player.id == currentId }">
                         ({{ player.abbrev }}) {{ player.name }}
                         <span v-show="showspielerpass">({{ player.pass }})</span>
                     </td>
-
-                    <td><NumberInput :inputname="'one80_'+player.id" :placeholder="'180er'"  :disabled="disabled"></NumberInput></td>
-                    <td><NumberInput :inputname="'one71_'+player.id" :placeholder="'171er'" :disabled="disabled"></NumberInput></td>
-                    <td><NumberListInput :inputname="'highfinish_'+player.id" :placeholder="'Highfinishes'" :disabled="disabled"></NumberListInput></td>
-                    <td><NumberListInput :inputname="'shortleg_'+player.id" :placeholder="'Shortlegs'" :disabled="disabled"></NumberListInput></td>
+                    <td><NumberInput @focus="onFocus" @blur="onBlur" :inputname="'one80_'+player.id" :placeholder="'180er'"  :disabled="disabled"></NumberInput></td>
+                    <td><NumberInput  @focus="onFocus" @blur="onBlur" :inputname="'one71_'+player.id" :placeholder="'171er'" :disabled="disabled"></NumberInput></td>
+                    <td><NumberListInput @focus="onFocus" @blur="onBlur" :inputname="'highfinish_'+player.id" :placeholder="'Highfinishes'" :disabled="disabled"></NumberListInput></td>
+                    <td><NumberListInput @focus="onFocus" @blur="onBlur" :inputname="'shortleg_'+player.id" :placeholder="'Shortlegs'" :disabled="disabled"></NumberListInput></td>
                 </tr>
             </tbody>
         </table>
@@ -43,6 +41,11 @@ export default {
         NumberInput,
         NumberListInput
     },
+    data() {
+        return {
+            currentId: null
+        }
+    },
     props: {
         // Verfügbare Spieler: Array von Objekten, jeweils ID und Name der verfügbaren Spieler
         showspielerpass: {
@@ -62,6 +65,14 @@ export default {
                 if (a.abbrev.match(/^G/) && b.abbrev.match(/^H/)) { return +1 }
                 return a.abbrev > b.abbrev ? +1 : -1
             })
+        }
+    },
+    methods: {
+        onFocus(e) {
+            this.currentId = e
+        },
+        onBlur() {
+            this.currentId = null
         }
     }
 }
@@ -86,5 +97,8 @@ td.label {
     overflow: clip;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.active {
+    font-weight: bold;
 }
 </style>
