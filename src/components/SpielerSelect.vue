@@ -147,4 +147,11 @@ select.loser { }
 .tl_select.unsetwidth {
     width: unset;
 }
+
+select.tl_select.unsetwidth
+{
+    max-width: 12rem;
+    overflow: clip;
+    text-overflow: ellipsis;
+}
 </style>

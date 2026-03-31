@@ -14,6 +14,7 @@
             <tbody>
                 <tr v-for="(player, i) in sortedPlayedAll" :key="'pr_'+i">
                     <td>
+                    <td v-bind:class="{'label': true, 'active': player.id == currentId }">
                         ({{ player.abbrev }}) {{ player.name }}
                         <span v-show="showspielerpass">({{ player.pass }})</span>
                     </td>
@@ -79,5 +80,11 @@ export default {
 }
 .highlights td {
     padding: .3rem;
+}
+td.label {
+    max-width: 12rem;
+    overflow: clip;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>
